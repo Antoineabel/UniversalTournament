@@ -7,6 +7,7 @@ public class CursorLock : MonoBehaviour {
 	void Start () {
 		lockMode = CursorLockMode.Locked;
 		Cursor.lockState = lockMode;
+		Cursor.visible = false;
 	}
 	
 	// Update is called once per frame

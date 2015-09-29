@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CollisionsScript : MonoBehaviour {
 
+	private float m_fCollideForce = 500;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -19,7 +21,7 @@ public class CollisionsScript : MonoBehaviour {
 		{
 			if (gameObject.tag == "Player")
 				LiveLost ();
-			gameObject.GetComponent<Rigidbody> ().AddForce (other.contacts [0].normal * 1000);
+			gameObject.GetComponent<Rigidbody> ().AddForce (other.contacts [0].normal * m_fCollideForce);
 		}
 	}
 

@@ -29,7 +29,7 @@ namespace SpaceShip{
 			// Read input for the pitch, yaw, roll and throttle of the aeroplane.
 			float roll = CrossPlatformInputManager.GetAxis("Horizontal");
 			float pitch = CrossPlatformInputManager.GetAxis("Mouse Y");
-			m_AirBrakes = CrossPlatformInputManager.GetButton("Fire1");
+			m_AirBrakes = (CrossPlatformInputManager.GetButton("Fire1") || CrossPlatformInputManager.GetButton("Jump"));
 			m_Yaw = CrossPlatformInputManager.GetAxis("Mouse X");
 			m_Throttle = CrossPlatformInputManager.GetAxis("Vertical");
 			#if MOBILE_INPUT
