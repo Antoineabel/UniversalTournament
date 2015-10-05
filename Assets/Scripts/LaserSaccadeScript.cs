@@ -4,10 +4,8 @@ using System.Collections;
 public class LaserSaccadeScript : MonoBehaviour
 {
     public Rigidbody m_rProjectile;
-
-    public static float m_fPuissance; // a passer en private une fois la valeur determinee
     public float m_fSpeed; // a passer en private une fois la valeur determinee
-    public float m_fTimebeforedestruction; // a passer en private une fois la valeur determinee
+    public float m_fSecondsUntilDestroy; // a passer en private une fois la valeur determinee
 
     // Use this for initialization
     void Start ()
@@ -16,18 +14,13 @@ public class LaserSaccadeScript : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
         if (Input.GetButton("Fire1"))
         {
             Rigidbody rProjectile_ = Instantiate(m_rProjectile, transform.position, transform.rotation) as Rigidbody;
             rProjectile_.velocity = transform.TransformDirection(Vector3.forward * m_fSpeed);
-            Destroy(rProjectile_.gameObject, m_fTimebeforedestruction);
+            Destroy(rProjectile_.gameObject, m_fSecondsUntilDestroy);
         }
    	}
-
-    static public float getPuissance()
-    {
-        return m_fPuissance;
-    }
 }

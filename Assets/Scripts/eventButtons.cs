@@ -35,4 +35,9 @@ public class eventButtons : MonoBehaviour
     {
         Application.Quit();
     }
+
+	public void LoadMenu()
+	{
+		Application.LoadLevel ("menu");
+	}
 }

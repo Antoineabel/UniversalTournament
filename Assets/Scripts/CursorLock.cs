@@ -2,16 +2,23 @@
 using System.Collections;
 
 public class CursorLock : MonoBehaviour {
-	CursorLockMode lockMode;
 	// Use this for initialization
 	void Start () {
-		lockMode = CursorLockMode.Locked;
-		Cursor.lockState = lockMode;
-		Cursor.visible = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (gameObject.GetComponent<PauseMenuScript> ().GetIfIsPause ()) {
+			UpdateCursorStatus (CursorLockMode.None, true);
+		} else {
+			UpdateCursorStatus(CursorLockMode.Locked, false);
+		}
+		Debug.Log (gameObject.GetComponent<PauseMenuScript> ().GetIfIsPause ());
+	}
+
+	void UpdateCursorStatus(CursorLockMode _clmMode, bool _bIsvisible)
+	{
+		Cursor.lockState = _clmMode;
+		Cursor.visible = _bIsvisible;
 	}
 }

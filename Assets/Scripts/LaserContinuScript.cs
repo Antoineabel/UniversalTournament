@@ -6,7 +6,8 @@ public class LaserContinuScript : MonoBehaviour
     private LineRenderer m_lrLine;
     private Light m_lLight;
 
-    public static float m_fPuissance; // a passer en private une fois la valeur determinee
+    public float m_fPuissance; // a passer en private une fois la valeur determinee
+    public GameObject m_goParticuleEffect;
 
     // Use this for initialization
     void Start ()
@@ -45,10 +46,19 @@ public class LaserContinuScript : MonoBehaviour
             if (Physics.Raycast(rRay, out rhHit, 100))
             {
                 m_lrLine.SetPosition(1, rhHit.point);
-                if(rhHit.rigidbody)
+                if (rhHit.rigidbody)
                 {
-                    // vie -= degats;
-                    rhHit.rigidbody.AddForceAtPosition(transform.forward * 50, rhHit.point);
+                    if (rhHit.rigidbody.tag != "SimpleShoot")
+                    {
+                        rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLifeLaserShoot(m_fPuissance);
+                        GameObject goParticule;
+                        goParticule = Instantiate(m_goParticuleEffect, rhHit.transform.position, rhHit.transform.rotation) as GameObject;
+                        Destroy(goParticule, 1.0f);
+                    }
+                }
+                else
+                {
+
                 }
             }
             else
@@ -59,10 +69,5 @@ public class LaserContinuScript : MonoBehaviour
         }
         m_lrLine.enabled = false;
         m_lLight.enabled = false;
-    }
-
-    static public float getPuissance()
-    {
-        return m_fPuissance;
     }
 }
