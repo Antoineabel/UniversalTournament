@@ -13,7 +13,6 @@ public class CursorLock : MonoBehaviour {
 		} else {
 			UpdateCursorStatus(CursorLockMode.Locked, false);
 		}
-		Debug.Log (gameObject.GetComponent<PauseMenuScript> ().GetIfIsPause ());
 	}
 
 	void UpdateCursorStatus(CursorLockMode _clmMode, bool _bIsvisible)

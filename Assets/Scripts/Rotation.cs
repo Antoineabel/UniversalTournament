@@ -10,7 +10,7 @@ public class Rotation : MonoBehaviour {
 	
 	public float vitesseX = 5f;
 	public float vitesseY = 15f;
-	public float vitesseZ = 500f;
+	public float vitesseZ = 10;
 
 	
 	// Update is called once per frame
