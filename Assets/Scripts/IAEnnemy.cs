@@ -22,7 +22,7 @@ namespace SpaceShip{
 		private float m_RandomPerlin;                       // Used for generating random point on perlin noise so that the plane will wander off path slightly
 		private bool m_TakenOff;                            // Has the plane taken off yet
 		private Transform myTransform;
-//	public Transform Target2; 
+//		public Transform Target2; 
 		
 		// setup script properties
 		private void Awake()
@@ -50,7 +50,6 @@ namespace SpaceShip{
 			if (m_Target != null)
 		//	if( Vector3.Distance (m_Target.position, myTransform.position) < 40)
 			{
-				Debug.Log("test");
 				// make the plane wander from the path, useful for making the AI seem more human, less robotic.
 				Vector3 targetPos = m_Target.position +
 					transform.right*

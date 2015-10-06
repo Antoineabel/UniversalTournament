@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CollisionsScript : MonoBehaviour {
 
-	private float m_fCollideForce = 750;
+	private float m_fCollideForce = 500;
 
 	// Use this for initialization
 	void Start () {
@@ -29,5 +29,6 @@ public class CollisionsScript : MonoBehaviour {
 	void LiveLost()
 	{
 		Debug.LogWarning (gameObject.name + " perd de la vie !");
+		GetComponent<LifeManager> ().MinusLifeLaserShoot (500);
 	}
 }

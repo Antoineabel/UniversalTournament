@@ -4,6 +4,11 @@ using System.Collections;
 public class eventButtons : MonoBehaviour
 {
 
+	void Awake()
+	{
+		Time.timeScale = 1;
+	}
+
 	// Use this for initialization
 	void Start ()
     {

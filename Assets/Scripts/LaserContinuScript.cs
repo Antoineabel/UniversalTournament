@@ -22,11 +22,14 @@ public class LaserContinuScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	    if(Input.GetButtonDown("Fire2"))
+		if (!GameObject.Find("GameManager").GetComponent<PauseMenuScript> ().GetIsPaused())
         {
-            StopCoroutine("FireLaser");
-            StartCoroutine("FireLaser");
-        }
+            if (Input.GetButtonDown("Fire2"))
+            {
+                StopCoroutine("FireLaser");
+                StartCoroutine("FireLaser");
+            }
+        }   
 	}
 
     IEnumerator FireLaser()
@@ -34,7 +37,7 @@ public class LaserContinuScript : MonoBehaviour
         m_lrLine.enabled = true;
         m_lLight.enabled = true;
 
-        while (Input.GetButton("Fire2"))
+        while (Input.GetButton("Fire2") && !GameObject.Find("GameManager").GetComponent<PauseMenuScript>().GetIsPaused())
         {
             m_lrLine.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0, Time.time);
 
@@ -50,10 +53,17 @@ public class LaserContinuScript : MonoBehaviour
                 {
                     if (rhHit.rigidbody.tag != "SimpleShoot")
                     {
-                        rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLifeLaserShoot(m_fPuissance);
-                        GameObject goParticule;
-                        goParticule = Instantiate(m_goParticuleEffect, rhHit.transform.position, rhHit.transform.rotation) as GameObject;
-                        Destroy(goParticule, 1.0f);
+                        if (rhHit.rigidbody.gameObject.GetComponent<LifeManager>())
+                        {
+                            rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLifeLaserShoot(m_fPuissance);
+                            GameObject goParticule;
+                            goParticule = Instantiate(m_goParticuleEffect, rhHit.transform.position, rhHit.transform.rotation) as GameObject;
+                            Destroy(goParticule, 1.0f);
+                        }
+                        else
+                        {
+                            Debug.Log("No Life Manager");
+                        }
                     }
                 }
                 else

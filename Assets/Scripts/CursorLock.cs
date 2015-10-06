@@ -8,7 +8,7 @@ public class CursorLock : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (gameObject.GetComponent<PauseMenuScript> ().GetIfIsPause ()) {
+		if (gameObject.GetComponent<PauseMenuScript> ().GetIsPaused ()) {
 			UpdateCursorStatus (CursorLockMode.None, true);
 		} else {
 			UpdateCursorStatus(CursorLockMode.Locked, false);

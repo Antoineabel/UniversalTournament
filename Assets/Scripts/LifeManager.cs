@@ -13,13 +13,12 @@ public class LifeManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 //        Debug.Log(m_fLife);
 
 	}
     void OnCollisionEnter (Collision _cCollider)
     {
-        Debug.Log(_cCollider.gameObject.name);
+//        Debug.Log(_cCollider.gameObject.name);
         if (_cCollider.gameObject.tag=="SimpleShoot")
         {
             MinusLifeSimpleShoot(_cCollider.gameObject.GetComponent<PuissanceProjectile>().m_fPuissance);
@@ -32,7 +31,7 @@ public class LifeManager : MonoBehaviour {
         {
             GameObject goParticule;
             goParticule = Instantiate(m_goParticuleEffect, this.transform.position, this.transform.rotation) as GameObject;
-            Destroy(goParticule, 15.0f);
+            Destroy(goParticule, 5.0f);
             Destroy(this.gameObject);            
         }
         else
@@ -47,7 +46,7 @@ public class LifeManager : MonoBehaviour {
         {
             GameObject goParticule;
             goParticule = Instantiate(m_goParticuleEffect, this.transform.position, this.transform.rotation) as GameObject;
-            Destroy(goParticule, 15.0f);
+            Destroy(goParticule, 5.0f);
             Destroy(this.gameObject);
         }
         else
