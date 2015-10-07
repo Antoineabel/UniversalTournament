@@ -15,20 +15,30 @@ public class CollisionsScript : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter(Collision other)
+	void OnCollisionEnter(Collision _cCollider)
 	{
-		if (other.gameObject.tag != "Bullet" && other.gameObject.tag != "Untagged") 
+		string sTag=_cCollider.gameObject.tag;
+		switch(sTag)
 		{
-			if (gameObject.tag == "Player"  || gameObject.tag == "Ennemy")
-				LiveLost ();
-			gameObject.GetComponent<Rigidbody> ().AddForce (other.contacts [0].normal * m_fCollideForce);
+		case "SimpleShoot":
+			LiveLost(_cCollider.gameObject.GetComponent<PuissanceProjectile>().m_fPuissance);
+			break;
+			
+		case "Object":
+			gameObject.GetComponent<Rigidbody> ().AddForce (_cCollider.contacts [0].normal * m_fCollideForce);
+			LiveLost(_cCollider.relativeVelocity.magnitude);
+			break;
+			
+		case "SpaceShip":
+			LiveLost(GetComponent<LifeManager> ().m_fLife);
+			break;
 		}
 	}
 
 
-	void LiveLost()
+	void LiveLost(float _fDamage)
 	{
-		Debug.LogWarning (gameObject.name + " perd de la vie !");
-		GetComponent<LifeManager> ().MinusLifeLaserShoot (500);
+		Debug.Log(gameObject.name + " perd de la vie !");
+		GetComponent<LifeManager> ().MinusLife(_fDamage);
 	}
 }

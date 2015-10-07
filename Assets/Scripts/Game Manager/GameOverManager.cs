@@ -24,4 +24,8 @@ public class GameOverManager : MonoBehaviour {
 	public void GameOver() {
 		m_anim.SetTrigger ("GameOver");
 	}
+
+	public void Victory() {
+		m_anim.SetTrigger ("Victory");
+	}
 }

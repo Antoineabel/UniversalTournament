@@ -11,7 +11,6 @@ public class TimerCountdown : MonoBehaviour {
 	private string m_sDisplayedSecondes;
 
 	public Text m_txtTexte;
-	public GameObject m_goGameOverScreen;
 
 	// Use this for initialization
 	void Start () {
@@ -30,8 +29,10 @@ public class TimerCountdown : MonoBehaviour {
 			if(m_fSecondes<10)
 				m_sDisplayedSecondes = "0"+m_fSecondes;
 
+			if(m_fMinutes<10)
+				m_sDisplayedMinutes = "0"+m_fMinutes;
 			if (m_fMinutes<=0)
-				m_sDisplayedMinutes="0";
+				m_sDisplayedMinutes="00";
 
 			if (m_fTimeMax<=0)
 				m_sDisplayedSecondes="00";
@@ -41,7 +42,7 @@ public class TimerCountdown : MonoBehaviour {
 			if (m_fTimeMax <= 0) 
 			{
 				Debug.LogWarning ("End of the Game");
-				m_goGameOverScreen.GetComponent<GameOverManager>().GameOver();
+				gameObject.GetComponent<GameOverManager>().GameOver();
 			} 
 			else 
 			{

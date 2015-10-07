@@ -55,7 +55,7 @@ public class LaserContinuScript : MonoBehaviour
                     {
                         if (rhHit.rigidbody.gameObject.GetComponent<LifeManager>())
                         {
-                            rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLifeLaserShoot(m_fPuissance);
+                            rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(m_fPuissance);
                             GameObject goParticule;
                             goParticule = Instantiate(m_goParticuleEffect, rhHit.transform.position, rhHit.transform.rotation) as GameObject;
                             Destroy(goParticule, 1.0f);
