@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.Utility;
 
-namespace UnityStandardAssets.Utility
-{
 	public class SmoothFollow : MonoBehaviour
 	{
 		
@@ -63,5 +62,20 @@ namespace UnityStandardAssets.Utility
 			// Always look at the target
 			transform.LookAt(target, target.up);
 		}
-	}
+
+		public void SetDistanceAndHeight(float _fDist, float _fHeight)
+		{
+			distance = _fDist;
+			height = _fHeight;
+		}
+
+		public float GetDistance()
+		{
+			return distance;
+		}
+
+		public float GetHeight()
+		{
+			return height;
+		}
 }

@@ -29,8 +29,10 @@ public class CollisionsScript : MonoBehaviour {
 			LiveLost(_cCollider.relativeVelocity.magnitude);
 			break;
 			
-		case "SpaceShip":
-			LiveLost(GetComponent<LifeManager> ().m_fLife);
+		case "Player":
+		case "Ennemy":
+			if (tag == "Player" || tag =="Ennemy")
+				LiveLost(GetComponent<LifeManager> ().m_fLife);
 			break;
 		}
 	}
