@@ -19,7 +19,7 @@ public class TimerCountdown : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (m_txtTexte) 
+		if (m_txtTexte && !gameObject.GetComponent<GameManager>().GetIfIsWin()) 
 		{	
 			m_fMinutes = Mathf.Floor (m_fTimeMax / 60);
 			m_fSecondes = Mathf.Floor (m_fTimeMax -m_fMinutes * 60);
