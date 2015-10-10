@@ -31,23 +31,29 @@ public class mvmCamera : MonoBehaviour {
 
 		if (m_bIsFirstPers) 
 		{
-			if (m_fDistOld > 13)
-				m_fDistOld -= Time.deltaTime*3;
-			if (m_fHeightOld > 0.5f)
-				m_fHeightOld -= Time.deltaTime;
-
-			if (m_fDistOld <=13 && m_fHeightOld<=0.5f && m_fAlphaOld<=255)
-				m_imgCockpit.canvasRenderer.SetAlpha(m_fAlphaOld+=Time.deltaTime);
+//			if (m_fDistOld > 13)
+//				m_fDistOld -= Time.deltaTime*3;
+//			if (m_fHeightOld > 0.5f)
+//				m_fHeightOld -= Time.deltaTime;
+//
+//			if (m_fDistOld <=13 && m_fHeightOld<=0.5f && m_fAlphaOld<=255)
+			m_fDistOld = 13;
+			m_fHeightOld = 0.5f;
+			m_fAlphaOld = 255;
+			m_imgCockpit.canvasRenderer.SetAlpha(m_fAlphaOld);
 		}
 		else 
 		{
-			if (m_fDistOld < 20)
-				m_fDistOld+=Time.deltaTime*3;
-			if (m_fHeightOld < 3)
-				m_fHeightOld+=Time.deltaTime;
-
-			if (m_fAlphaOld>=0)
-				m_imgCockpit.canvasRenderer.SetAlpha(m_fAlphaOld-=Time.deltaTime*10);
+//			if (m_fDistOld < 20)
+//				m_fDistOld+=Time.deltaTime*3;
+//			if (m_fHeightOld < 3)
+//				m_fHeightOld+=Time.deltaTime;
+//
+			//			if (m_fAlphaOld>=0)
+			m_fDistOld = 20;
+			m_fHeightOld = 3;
+			m_fAlphaOld = 0;
+			m_imgCockpit.canvasRenderer.SetAlpha(m_fAlphaOld);
 		}
 		GetComponent<SmoothFollow> ().SetDistanceAndHeight (m_fDistOld, m_fHeightOld);
 	}

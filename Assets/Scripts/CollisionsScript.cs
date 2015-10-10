@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CollisionsScript : MonoBehaviour {
 
-	private float m_fCollideForce = 500;
+	private float m_fCollideForce = 200;
 
 	// Use this for initialization
 	void Start () {
