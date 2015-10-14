@@ -26,12 +26,16 @@ public class CollisionsScript : MonoBehaviour {
 			
 		case "Object":
 			gameObject.GetComponent<Rigidbody> ().AddForce (_cCollider.contacts [0].normal * m_fCollideForce);
-			LiveLost(_cCollider.relativeVelocity.magnitude);
+//			LiveLost(_cCollider.relativeVelocity.magnitude);
+			LiveLost(m_fCollideForce/10);
 			break;
 			
 		case "Player":
+			if (tag =="Ennemy")
+				LiveLost(GetComponent<LifeManager> ().m_fLife);
+			break;
 		case "Ennemy":
-			if (tag == "Player" || tag =="Ennemy")
+			if (tag == "Player" )
 				LiveLost(GetComponent<LifeManager> ().m_fLife);
 			break;
 		}

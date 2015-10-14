@@ -16,14 +16,26 @@ namespace SpaceShip{
 		[SerializeField] private float m_MaxRollAngle = 45;             // The maximum angle that the AI will attempt to u
 		[SerializeField] private float m_SpeedEffect = 0.01f;           // This increases the effect of the controls based on the plane's speed.
 		[SerializeField] private float m_TakeoffHeight = 20;            // the AI will fly straight and only pitch upwards until reaching this height
-		[SerializeField] private Transform m_Target;                    // the target to fly towards
+		//[SerializeField] private Transform m_Target;                    // the target to fly towards
 		
 		private SpaceShipController m_AeroplaneController;  // The aeroplane controller that is used to move the plane
 		private float m_RandomPerlin;                       // Used for generating random point on perlin noise so that the plane will wander off path slightly
 		private bool m_TakenOff;                            // Has the plane taken off yet
 		private Transform myTransform;
-//		public Transform Target2; 
+//	public Transform Target2; 
+		private Transform EchangeCible;  
+		private Transform Cible; 
+		private Transform Asteroid; 
+
+		public Rigidbody m_rProjectile;
 		
+		public static float m_fPuissance; // a passer en private une fois la valeur determinee
+		public float m_fSpeed; // a passer en private une fois la valeur determinee
+		public float m_fTimebeforedestruction; // a passer en private une fois la valeur determinee
+		
+		public Rigidbody rb;
+		public GameObject m_goWeapon;
+
 		// setup script properties
 		private void Awake()
 		{
@@ -32,9 +44,13 @@ namespace SpaceShip{
 			
 			// pick a random perlin starting point for lateral wandering
 			m_RandomPerlin = Random.Range(0f,180f);
+			EchangeCible=GameObject.FindWithTag("Player").transform;
+			Cible=GameObject.FindWithTag("Base").transform;
+			Asteroid=GameObject.FindWithTag("Object").transform;
 			myTransform = transform;
+			rb = GetComponent<Rigidbody> ();
 		}
-		
+
 		
 		// reset the object to sensible values
 		public void Reset()
@@ -47,11 +63,43 @@ namespace SpaceShip{
 		private void FixedUpdate()
 		{
 
-			if (m_Target != null)
-		//	if( Vector3.Distance (m_Target.position, myTransform.position) < 40)
+			
+			if (Vector3.Distance (Asteroid.position, myTransform.position) < 15) {
+				Debug.LogWarning("Je Vais me prendre un astéroide");
+				m_AeroplaneController.Move(0,20,0,0,false);
+				deplacement ();
+			}
+			if (Vector3.Distance (EchangeCible.position, myTransform.position) < 40) {
+				rb.AddForce (0, 0, 40);
+				SetTarget (EchangeCible);
+				deplacement ();
+				if (Vector3.Distance (EchangeCible.position, myTransform.position) < 20) {
+					shoot ();
+				}
+			}
+			else
 			{
+				SetTarget(Cible);
+				deplacement ();
+
+			}
+		}
+		
+		
+		// allows other scripts to set the plane's target
+		public void SetTarget(Transform target)
+		{
+			Cible = target;
+		}
+		public void deplacement()
+		{
+
+			if (Cible != null)
+				//	if( Vector3.Distance (m_Target.position, myTransform.position) < 40)
+			{
+				Debug.Log("test");
 				// make the plane wander from the path, useful for making the AI seem more human, less robotic.
-				Vector3 targetPos = m_Target.position +
+				Vector3 targetPos = Cible.position +
 					transform.right*
 						(Mathf.PerlinNoise(Time.time*m_LateralWanderSpeed, m_RandomPerlin)*2 - 1)*
 						m_LateralWanderDistance;
@@ -102,28 +150,35 @@ namespace SpaceShip{
 				
 				// pass the current input to the plane (false = because AI never uses air brakes!)
 				m_AeroplaneController.Move(rollInput, pitchInput, yawInput, throttleInput, false);
-
-
-
+				
+				
+				
 			}
 			else 
 			{
 				// no target set, send zeroed input to the planeW
 				m_AeroplaneController.Move(0,0,0,0,false);
+
 			}
-//			if( Vector3.Distance (Target2.position, myTransform.position) < 40)
-//			{
-//				Debug.Log("asteroide");
-//				m_AeroplaneController.Move(0,0,0,0,false);
-//			}
+			/*if( Vector3.Distance (Target2.position, myTransform.position) < 40)
+			{
+				Debug.Log("asteroide");
+				m_AeroplaneController.Move(0,0,0,0,false);
+			}*/
+
+
+
+
 
 		}
-		
-		
-		// allows other scripts to set the plane's target
-		public void SetTarget(Transform target)
+		private void shoot()
 		{
-			m_Target = target;
+			m_goWeapon.GetComponent<LaserSaccadeScript> ().Shoot ();
+			Debug.Log ("shoot");
+		}
+		static public float getPuissance()
+		{
+			return m_fPuissance;
 		}
 	}
 }

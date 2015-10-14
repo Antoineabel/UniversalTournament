@@ -10,13 +10,10 @@ namespace SpaceShip{
 		[SerializeField] private float m_PitchEffect = 1f;            // The strength of effect for pitch input.
 		[SerializeField] private float m_YawEffect = 0.2f;            // The strength of effect for yaw input.
 		[SerializeField] private float m_AerodynamicEffect = 0.02f;   // How much aerodynamics affect the speed of the aeroplane.
-		[SerializeField] private float m_AutoRollLevel = 0.2f;        // How much the aeroplane tries to level when not rolling.
-		[SerializeField] private float m_AutoPitchLevel = 0.2f;       // How much the aeroplane tries to level when not pitching.
-		[SerializeField] private float m_AutoYawLevel = 0.02f;		  // How much the aeroplane tries to level when not yawing.
 		[SerializeField] private float m_AirBrakesEffect = 3f;        // How much the air brakes effect the drag.
 		[SerializeField] private float m_ThrottleChangeSpeed = 0.3f;  // The speed with which the throttle changes.
 		[SerializeField] private float m_DragIncreaseFactor = 0.001f; // how much drag should increase with speed.
-		[SerializeField] private float m_StationaryThrottlePower=0.3f;// The speed at which the throttle changes when stationary.
+		[SerializeField] private float m_ThrottlePower=0.3f;// The speed at which the throttle changes.
 		[SerializeField] private float m_StationaryFlightLimit = 0.1f;// The speed at which the spaceship will enter stationary flight.
 		
 		public float Altitude { get; private set; }                     // The aeroplane's height above the ground.
@@ -71,8 +68,6 @@ namespace SpaceShip{
 			
 			CalculateRollAndPitchAngles();
 			
-			AutoLevel();
-			
 			CalculateForwardSpeed();
 			
 			ControlThrottle();
@@ -120,28 +115,6 @@ namespace SpaceShip{
 		}
 		
 		
-		private void AutoLevel()
-		{
-			// auto level roll, if there's no roll input:
-			if (RollInput == 0f)
-			{
-				if (ForwardSpeed!=0f)
-					RollInput = -m_Rigidbody.angularVelocity.z*m_AutoRollLevel;
-					//Potentially, a null forward velocity can cause the rotation angle to be inverted
-				else RollInput = m_Rigidbody.angularVelocity.z*m_AutoRollLevel;
-			}
-			// auto correct pitch, if no pitch input 
-			if (PitchInput == 0f)
-			{
-				PitchInput = -m_Rigidbody.angularVelocity.x*m_AutoPitchLevel;
-			}
-			if (YawInput == 0f) {
-				//auto correct yaw if no yaw input and forward speed(Yaw auto levels itself when advancing)
-				YawInput = -m_Rigidbody.angularVelocity.y*m_AutoYawLevel;
-			}
-		}
-		
-		
 		private void CalculateForwardSpeed()
 		{
 			// Forward speed is the speed in the planes's forward direction (not the same as its velocity, eg if falling in a stall)
@@ -173,7 +146,12 @@ namespace SpaceShip{
 			// Air brakes work by directly modifying drag. This part is actually pretty realistic!
 			m_Rigidbody.drag = (AirBrakes ? (m_OriginalDrag + extraDrag)*m_AirBrakesEffect : m_OriginalDrag + extraDrag);
 			// Forward speed affects angular drag - at high forward speed, it's much harder for the plane to spin
-			m_Rigidbody.angularDrag = m_OriginalAngularDrag*ForwardSpeed;
+
+			if (ForwardSpeed <= m_StationaryFlightLimit) {
+			m_Rigidbody.angularDrag = m_OriginalAngularDrag;
+			} else {
+				m_Rigidbody.angularDrag = m_OriginalAngularDrag * ForwardSpeed;
+			}
 		}
 		
 		
@@ -228,15 +206,8 @@ namespace SpaceShip{
 			torque += YawInput*m_YawEffect*transform.up;
 			// Add torque for the roll based on the roll input.
 			torque += -RollInput*m_RollEffect*transform.forward;
-			// The total torque is multiplied by the forward speed, so the controls have more effect at high speed,
-			// and little effect at low speed, or when not moving in the direction of the nose of the plane
-			// (i.e. falling while stalled)
-			if (ForwardSpeed >= m_StationaryFlightLimit) {
-				m_Rigidbody.AddTorque (torque * ForwardSpeed * m_AeroFactor);
-			}
-			else
-				
-				m_Rigidbody.AddTorque (torque * m_StationaryThrottlePower);
+
+			m_Rigidbody.AddTorque (torque*m_ThrottlePower*(1+ForwardSpeed*m_AeroFactor));
 		}
 		
 		

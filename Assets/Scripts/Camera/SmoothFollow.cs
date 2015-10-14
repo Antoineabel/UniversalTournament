@@ -13,51 +13,31 @@ using UnityStandardAssets.Utility;
 		// the height we want the camera to be above the target
 		[SerializeField]
 		private float height = 5.0f;
-		
 		[SerializeField]
-		private float rotationDamping;
-		[SerializeField]
-		private float heightDamping;
+		private float damping;
 		
 		// Use this for initialization
 		void Start() { }
 		
-		// Update is called once per frame
-		void LateUpdate()
+		// FixedUpdate(), becausue we are targetting a physical object
+		void FixedUpdate()
 		{
 			// Early out if we don't have a target
 			if (!target)
 				return;
-			
-			// Calculate the current rotation angles
-			var wantedRotationAngle = target.eulerAngles.y;
-			var wantedHeight = target.position.y + height;
-			
-			var currentRotationAngle = transform.eulerAngles.y;
-			var currentHeight = transform.position.y;
-			
-			// Damp the rotation around the y-axis
-			currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
-			
-			// Damp the height
-			currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
-			
-			// Convert the angle into a rotation
-			var currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
-			
-			// Set the position of the camera on the x-z plane to:
-			// distance meters behind the target
-			//transform.position = target.position;
-			transform.position = (new Vector3 (0, height, -distance));
-			//transform.position = Vector3.forward * distance;
-			//rotating camera around target
-			//transform.position -= target.position
-			transform.position = target.rotation *transform.position;
-			transform.position += target.position;
-			//Quaternion rotationAroundTarget = Quaternion.FromToRotation (Vector3.forward, target.transform.forward);
+				
+			Vector3 currentPosition = transform.position;
 
-			// Set the height of the camera
-			//transform.position = (new Vector3(transform.position.x ,transform.position.y+height , transform.position.z));
+			//calculate wanted position by setting it to the offset, then rotating it, then translating it to the right position
+			Vector3 wantedPosition = (new Vector3 (0, height, -distance));
+			wantedPosition = target.rotation * wantedPosition;
+			wantedPosition += target.position;
+
+			//interpolate current position and wanted position.
+			wantedPosition = Vector3.Lerp (transform.position, wantedPosition, damping*Time.deltaTime);
+
+			transform.position = wantedPosition;
+
 			
 			// Always look at the target
 			transform.LookAt(target, target.up);
