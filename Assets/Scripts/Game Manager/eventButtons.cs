@@ -4,22 +4,24 @@ using System.Collections;
 public class eventButtons : MonoBehaviour
 {
 
-	void Awake()
-	{
-		Time.timeScale = 1;
-	}
+    public Object[] m_goTabScenes;
 
-	// Use this for initialization
-	void Start ()
+    void Awake()
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        Time.timeScale = 1;
+    }
+
+    // Use this for initialization
+    void Start()
     {
-	
-	}
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void loadGame()
     {
@@ -41,8 +43,31 @@ public class eventButtons : MonoBehaviour
         Application.Quit();
     }
 
-	public void LoadMenu()
-	{
-		Application.LoadLevel ("menu");
-	}
+    public void LoadMenu()
+    {
+        Application.LoadLevel("menu");
+    }
+
+    public void MenuPlay()
+    {
+        Camera.main.transform.Rotate(0, 90, 0);
+    }
+
+    public void ReturnMenu()
+    {
+        Destroy(GameObject.FindGameObjectWithTag("SpaceShip"));
+        Camera.main.transform.Rotate(0, -90, 0);
+    }
+
+    public void MenuMulti()
+    {
+        Application.LoadLevel("MenuMulti");
+    }
+
+    public void MenuSolo()
+    {
+        Application.LoadLevel("MenuSolo");
+
+    }
+
 }
