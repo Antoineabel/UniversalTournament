@@ -64,7 +64,7 @@ public class eventButtons : MonoBehaviour
 
     public void MenuSolo()
     {
-        Application.LoadLevel("MenuSolo");
+        Application.LoadLevel("game");
 
     }
 
