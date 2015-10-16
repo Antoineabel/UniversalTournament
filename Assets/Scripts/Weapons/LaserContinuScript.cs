@@ -22,14 +22,19 @@ public class LaserContinuScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if (!GameObject.Find("GameManager").GetComponent<PauseMenuScript> ().GetIsPaused())
+        if (Application.loadedLevelName != "MenuSolo"
+            && Application.loadedLevelName != "MenuMulti"
+            && GameObject.Find("GameManager"))
         {
-            if (Input.GetButtonDown("Fire2"))
+            if (!GameObject.Find("GameManager").GetComponent<PauseMenuScript>().GetIsPaused())
             {
-                StopCoroutine("FireLaser");
-                StartCoroutine("FireLaser");
+                if (Input.GetButtonDown("Fire2"))
+                {
+                    StopCoroutine("FireLaser");
+                    StartCoroutine("FireLaser");
+                }
             }
-        }   
+        }
 	}
 
     IEnumerator FireLaser()

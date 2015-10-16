@@ -4,7 +4,6 @@ using System.Collections;
 public class eventButtons : MonoBehaviour
 {
 
-    public Object[] m_goTabScenes;
 
     void Awake()
     {
@@ -55,7 +54,6 @@ public class eventButtons : MonoBehaviour
 
     public void ReturnMenu()
     {
-        Destroy(GameObject.FindGameObjectWithTag("SpaceShip"));
         Camera.main.transform.Rotate(0, -90, 0);
     }
 

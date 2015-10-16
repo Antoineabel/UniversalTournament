@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityStandardAssets.Utility;
 
 	public class SmoothFollow : MonoBehaviour
@@ -17,7 +18,22 @@ using UnityStandardAssets.Utility;
 		private float damping;
 		
 		// Use this for initialization
-		void Start() { }
+		void Start() {
+            if (!target)
+            {
+                Debug.Log("pas de target");
+                GameObject []go = GameObject.FindGameObjectsWithTag("Player");
+                foreach (GameObject it in go)
+                {
+                    if (it.GetComponent<NetworkIdentity>().isLocalPlayer)
+                        target = it.transform.GetChild(1).transform;
+                    else
+                    {
+                        it.tag = "Ennemy";
+                    }
+                }
+            }
+        }
 		
 		// FixedUpdate(), becausue we are targetting a physical object
 		void FixedUpdate()

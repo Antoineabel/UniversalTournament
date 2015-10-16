@@ -2,7 +2,7 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class ShipData : NetworkBehaviour {
+public class ShipData : MonoBehaviour {
 
 	private float m_fLife;
 //	private float m_fShield;
@@ -26,8 +26,6 @@ public class ShipData : NetworkBehaviour {
 		m_v3Position = GetComponent<Transform> ().position;
 		m_qRotation = GetComponent<Transform> ().rotation;
 
-		m_bIsLocalPlayer = isLocalPlayer;
-
 		m_goWeaponPrefab = transform.GetChild (0).GetChild (0).gameObject;
 	}
 
@@ -46,7 +44,9 @@ public class ShipData : NetworkBehaviour {
 	 * */
 	public void SetShipPrefab(GameObject _goShipPrefab)	{m_goShipPrefab = _goShipPrefab;}
 
-	public void SetIfIsIA(bool _bIsIA) {m_bIsIA = _bIsIA;}
+    public void SetIfIsIA(bool _bIsIA) { m_bIsIA = _bIsIA; }
+
+    public void SetIFIsLocalPlayer(bool _bIsLocalPlayer) { m_bIsLocalPlayer = _bIsLocalPlayer; }
 
 
 	/***

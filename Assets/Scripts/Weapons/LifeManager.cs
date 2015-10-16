@@ -13,8 +13,7 @@ public class LifeManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (gameObject.tag=="Player")
-        Debug.Log(m_fLife);
+
 	}
 
     public void MinusLife(float _fWeaponPower)

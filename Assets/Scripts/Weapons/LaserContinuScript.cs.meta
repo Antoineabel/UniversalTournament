@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: c94113029589e9c42aa7bb8dbcaa8417
-timeCreated: 1443470166
+timeCreated: 1445003387
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - m_goParticuleEffect: {fileID: 100006, guid: 0438351a6e6422d43a09930e9be00ee9,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

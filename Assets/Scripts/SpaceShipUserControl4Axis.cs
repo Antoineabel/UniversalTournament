@@ -1,10 +1,11 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace SpaceShip{
 	[RequireComponent(typeof (SpaceShipController))]
-	public class SpaceShipUserControl4Axis : MonoBehaviour {
+	public class SpaceShipUserControl4Axis : NetworkBehaviour {
 
 		// these max angles are only used on mobile, due to the way pitch and roll input are handled
 		public float maxRollAngle = 80;
@@ -15,10 +16,18 @@ namespace SpaceShip{
 		private float m_Throttle;
 		private bool m_AirBrakes;
 		private float m_Yaw;
+
+        private Transform myTransform;
+        [SyncVar]
+        private Vector3 SyncPosition;
+
+        [SyncVar]
+        private Quaternion SyncRotation;
 		
-		
-		private void Awake()
-		{
+		private void Start()
+        {
+            myTransform = transform;
+
 			// Set up the reference to the aeroplane controller.
 			m_Aeroplane = GetComponent<SpaceShipController>();
 		}
@@ -26,17 +35,28 @@ namespace SpaceShip{
 		
 		private void FixedUpdate()
 		{
-			// Read input for the pitch, yaw, roll and throttle of the aeroplane.
-			float roll = CrossPlatformInputManager.GetAxis("Horizontal");
-			float pitch = CrossPlatformInputManager.GetAxis("Mouse Y");
-			m_AirBrakes = (CrossPlatformInputManager.GetButton("Jump"));
-			m_Yaw = CrossPlatformInputManager.GetAxis("Mouse X");
-			m_Throttle = CrossPlatformInputManager.GetAxis("Vertical");
-			#if MOBILE_INPUT
-			AdjustInputForMobileControls(ref roll, ref pitch, ref m_Throttle);
-			#endif
-			// Pass the input to the aeroplane
-			m_Aeroplane.Move(roll, pitch, m_Yaw, m_Throttle, m_AirBrakes);
+            if (Application.loadedLevelName != "MenuMulti" && Application.loadedLevelName != "MenuSolo")
+            {
+                //if (!isLocalPlayer)
+                //{
+                //    myTransform.position = Vector3.Lerp(myTransform.position, SyncPosition, Time.deltaTime * 15);
+                //    myTransform.rotation = Quaternion.Slerp(myTransform.rotation, SyncRotation, Time.deltaTime * 15);
+                //}
+                //else
+                //{
+                    // Read input for the pitch, yaw, roll and throttle of the aeroplane.
+                    float roll = CrossPlatformInputManager.GetAxis("Horizontal");
+                    float pitch = CrossPlatformInputManager.GetAxis("Mouse Y");
+                    m_AirBrakes = (CrossPlatformInputManager.GetButton("Jump"));
+                    m_Yaw = CrossPlatformInputManager.GetAxis("Mouse X");
+                    m_Throttle = CrossPlatformInputManager.GetAxis("Vertical");
+#if MOBILE_INPUT
+			        AdjustInputForMobileControls(ref roll, ref pitch, ref m_Throttle);
+#endif
+                    // Pass the input to the aeroplane
+                    m_Aeroplane.Move(roll, pitch, m_Yaw, m_Throttle, m_AirBrakes);
+                //}
+            }
 		}
 		
 		

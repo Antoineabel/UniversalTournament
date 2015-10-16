@@ -13,7 +13,8 @@ public class mvmCamera : MonoBehaviour {
 	private bool m_bIsFirstPers;
 	
 	// Use this for initialization
-	void Start () {
+	void Start () { 
+        m_imgCockpit = GameObject.Find("Cockpit").GetComponent<Image>();
 		m_bIsFirstPers = false;
 		m_fDistOld = GetComponent<SmoothFollow> ().GetDistance ();
 		m_fHeightOld = GetComponent<SmoothFollow> ().GetHeight ();
