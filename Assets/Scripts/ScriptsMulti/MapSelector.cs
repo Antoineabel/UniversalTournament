@@ -5,13 +5,13 @@ using System.Collections;
 
 public class MapSelector : MonoBehaviour {
 	
-	private int m_iCompteur;
-    private Object m_oScene;
+	private static int m_iCompteur;
+    private string m_oScene;
 
 	public RawImage m_riVisuelMap;
 	public Texture [] m_tTabVisuelMap;
-	
-	public Object [] m_oTabMap;
+
+    public string[] m_oTabMap;
 
 	// Use this for initialization
 	void Start () {

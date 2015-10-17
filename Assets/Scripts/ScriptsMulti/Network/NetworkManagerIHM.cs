@@ -37,7 +37,7 @@ public class NetworkManagerIHM : MonoBehaviour {
 
     public void StartServer()
     {
-        GameObject.Find("GO_NetworkManager").GetComponent<NetworkManager>().StopHost();
+        //GameObject.Find("GO_NetworkManager").GetComponent<NetworkManager>().StopHost();
         GameObject.Find("GO_NetworkManager").GetComponent<NetworkManager>().networkAddress = m_sIPServer;
         Debug.Log("Je lance le serveur à l'adresse: " + m_sIPServer);
         GameObject.Find("GO_NetworkManager").GetComponent<NetworkManager>().StartHost();

@@ -5,8 +5,8 @@ using System.Collections;
 public class NetworkSettingsManager : MonoBehaviour {
 
     private static GameObject m_goShipPrefab;
-    private static Object m_oMap;
-    private int cpt;
+    private static string m_oMap;
+    private static int cpt;
 
 	// Use this for initialization
 	void Start () {
@@ -19,10 +19,8 @@ public class NetworkSettingsManager : MonoBehaviour {
 
         if (Application.loadedLevelName == "NetSettings")
         {
-
-
-            Debug.Log("je suis une bite" + m_oMap.name);
-            GameObject.Find("GO_NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(m_oMap.name);
+            Debug.Log("je suis une bite" + m_oMap);
+            GameObject.Find("GO_NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(m_oMap);
         }
 	}
 	
@@ -41,12 +39,12 @@ public class NetworkSettingsManager : MonoBehaviour {
         return m_goShipPrefab;
     }
 
-    public void SetMap(Object _oMap)
+    public void SetMap(string _oMap)
     {
         m_oMap = _oMap;
     }
 
-    public Object GetMap()
+    public string GetMap()
     {
         return m_oMap;
     }
