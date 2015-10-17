@@ -11,7 +11,7 @@ public class PlayerManager : NetworkBehaviour {
     {
         myTransform = GetComponent<Transform>();
         m_goShip = Instantiate(GameObject.Find("NetworkSettings").GetComponent<NetworkSettingsManager>().GetShipPrefab(), myTransform.position, myTransform.rotation) as GameObject;
-        NetworkServer.Spawn(m_goShip);
+        //NetworkServer.Spawn(m_goShip);
         m_goShip.transform.GetChild(0).GetComponent<ShipData>().SetIFIsLocalPlayer(isLocalPlayer);
         m_goShip.transform.SetParent(myTransform);
 		

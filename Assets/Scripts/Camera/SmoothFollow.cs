@@ -19,20 +19,7 @@ using UnityStandardAssets.Utility;
 		
 		// Use this for initialization
 		void Start() {
-            if (!target)
-            {
-                Debug.Log("pas de target");
-                GameObject []go = GameObject.FindGameObjectsWithTag("Player");
-                foreach (GameObject it in go)
-                {
-                    if (it.GetComponent<NetworkIdentity>().isLocalPlayer)
-                        target = it.transform.GetChild(1).transform;
-                    else
-                    {
-                        it.tag = "Ennemy";
-                    }
-                }
-            }
+             target = GameObject.Find("CameraTarget").transform;
         }
 		
 		// FixedUpdate(), becausue we are targetting a physical object

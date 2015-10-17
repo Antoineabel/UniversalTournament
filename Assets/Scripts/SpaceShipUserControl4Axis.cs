@@ -23,39 +23,43 @@ namespace SpaceShip{
 
         [SyncVar]
         private Quaternion SyncRotation;
-		
+
+        private string []m_sSceneMode;
+
 		private void Start()
         {
             myTransform = transform;
 
 			// Set up the reference to the aeroplane controller.
-			m_Aeroplane = GetComponent<SpaceShipController>();
+            m_Aeroplane = GetComponent<SpaceShipController>();
+            m_sSceneMode = Application.loadedLevelName.Split('_');
 		}
 		
 		
 		private void FixedUpdate()
 		{
-            if (Application.loadedLevelName != "MenuMulti" && Application.loadedLevelName != "MenuSolo")
+            if (m_sSceneMode[0] != "Menu")
             {
-                //if (!isLocalPlayer)
-                //{
-                //    myTransform.position = Vector3.Lerp(myTransform.position, SyncPosition, Time.deltaTime * 15);
-                //    myTransform.rotation = Quaternion.Slerp(myTransform.rotation, SyncRotation, Time.deltaTime * 15);
-                //}
-                //else
-                //{
-                    // Read input for the pitch, yaw, roll and throttle of the aeroplane.
-                    float roll = CrossPlatformInputManager.GetAxis("Horizontal");
-                    float pitch = CrossPlatformInputManager.GetAxis("Mouse Y");
-                    m_AirBrakes = (CrossPlatformInputManager.GetButton("Jump"));
-                    m_Yaw = CrossPlatformInputManager.GetAxis("Mouse X");
-                    m_Throttle = CrossPlatformInputManager.GetAxis("Vertical");
+                // Read input for the pitch, yaw, roll and throttle of the aeroplane.
+                float roll = CrossPlatformInputManager.GetAxis("Horizontal");
+                float pitch = CrossPlatformInputManager.GetAxis("Mouse Y");
+                m_AirBrakes = (CrossPlatformInputManager.GetButton("Jump"));
+                m_Yaw = CrossPlatformInputManager.GetAxis("Mouse X");
+                m_Throttle = CrossPlatformInputManager.GetAxis("Vertical");
 #if MOBILE_INPUT
 			        AdjustInputForMobileControls(ref roll, ref pitch, ref m_Throttle);
 #endif
-                    // Pass the input to the aeroplane
+                if (m_sSceneMode[1] == "Multi")
+                {
+                    if(isLocalPlayer)
+                    {
+                        m_Aeroplane.Move(roll, pitch, m_Yaw, m_Throttle, m_AirBrakes);
+                    }
+                }
+                else
+                {
                     m_Aeroplane.Move(roll, pitch, m_Yaw, m_Throttle, m_AirBrakes);
-                //}
+                }
             }
 		}
 		

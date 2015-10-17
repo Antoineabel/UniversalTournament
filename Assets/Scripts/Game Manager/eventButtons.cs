@@ -24,7 +24,7 @@ public class eventButtons : MonoBehaviour
 
     public void loadGame()
     {
-        Application.LoadLevel("game");
+        Application.LoadLevel("game_Solo");
     }
 
     public void loadOptions()
@@ -59,12 +59,12 @@ public class eventButtons : MonoBehaviour
 
     public void MenuMulti()
     {
-        Application.LoadLevel("MenuMulti");
+        Application.LoadLevel("Menu_Multi");
     }
 
     public void MenuSolo()
     {
-        Application.LoadLevel("game");
+        Application.LoadLevel("game_Solo");
 
     }
 

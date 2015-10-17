@@ -14,13 +14,16 @@ public class NetworkSettingsManager : MonoBehaviour {
         foreach (GameObject go in GameObject.FindObjectsOfType<GameObject>())
         {
             cpt++;
-            //Debug.Log("n°"+cpt+" Je suis un GameObject et je m'appelle "+go.name);
         }
-        //Debug.Log("Il y a " + cpt + " GameObject actifs");
         cpt = 0;
 
         if (Application.loadedLevelName == "NetSettings")
+        {
+
+
+            Debug.Log("je suis une bite" + m_oMap.name);
             GameObject.Find("GO_NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(m_oMap.name);
+        }
 	}
 	
 	// Update is called once per frame

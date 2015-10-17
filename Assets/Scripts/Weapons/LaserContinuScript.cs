@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class LaserContinuScript : MonoBehaviour
+public class LaserContinuScript : NetworkBehaviour
 {
     private LineRenderer m_lrLine;
     private Light m_lLight;
+
+    private string[] m_sSceneMode;
 
     public float m_fPuissance; // a passer en private une fois la valeur determinee
     public GameObject m_goParticuleEffect;
@@ -17,21 +20,35 @@ public class LaserContinuScript : MonoBehaviour
 
         m_lrLine.enabled = false;
         m_lLight.enabled = false;
+        m_sSceneMode = Application.loadedLevelName.Split('_');
+        
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (Application.loadedLevelName != "MenuSolo"
-            && Application.loadedLevelName != "MenuMulti"
-            && GameObject.Find("GameManager"))
+        if (m_sSceneMode[0] != "Menu" )
         {
             if (!GameObject.Find("GameManager").GetComponent<PauseMenuScript>().GetIsPaused())
             {
                 if (Input.GetButtonDown("Fire2"))
                 {
-                    StopCoroutine("FireLaser");
-                    StartCoroutine("FireLaser");
+                    Debug.Log("Laser continue");
+                    if (m_sSceneMode[1]=="Multi")
+                    {
+                        Debug.Log("Laser continue en multi");
+                        if(isLocalPlayer)
+                        {
+                            Debug.Log("Laser continue sur joueur local");
+                            StopCoroutine("FireLaser");
+                            StartCoroutine("FireLaser");
+                        }
+                    }
+                    else
+                    {
+                        StopCoroutine("FireLaser");
+                        StartCoroutine("FireLaser");
+                    }
                 }
             }
         }
@@ -50,7 +67,6 @@ public class LaserContinuScript : MonoBehaviour
             RaycastHit rhHit;
 
             m_lrLine.SetPosition(0, rRay.origin);
-
             if (Physics.Raycast(rRay, out rhHit, 100))
             {
                 m_lrLine.SetPosition(1, rhHit.point);

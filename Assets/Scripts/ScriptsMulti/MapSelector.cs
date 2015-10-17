@@ -15,7 +15,7 @@ public class MapSelector : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        m_iCompteur = 0;
 	}
 	
 	// Update is called once per frame
@@ -60,6 +60,8 @@ public class MapSelector : MonoBehaviour {
 	public void SendMapToServer()
 	{
         m_oScene = m_oTabMap[m_iCompteur];
+        Debug.Log("Le compteur est " + m_iCompteur + "les map sont" + m_oTabMap[0]+ " et " + m_oTabMap[1]);
+        Debug.Log("LA MAP UTILE EST " + m_oScene);
         GameObject.Find("NetworkSettings").GetComponent<NetworkSettingsManager>().SetMap(m_oScene);
 	}
 }
