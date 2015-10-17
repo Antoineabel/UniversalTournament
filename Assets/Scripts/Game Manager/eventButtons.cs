@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class eventButtons : MonoBehaviour
+public class eventButtons : NetworkBehaviour
 {
 
+    private string[] m_sSceneMode;
 
     void Awake()
     {
@@ -13,7 +15,7 @@ public class eventButtons : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        m_sSceneMode = Application.loadedLevelName.Split('_');
     }
 
     // Update is called once per frame
@@ -44,6 +46,13 @@ public class eventButtons : MonoBehaviour
 
     public void LoadMenu()
     {
+        if (m_sSceneMode[1] == "Multi")
+        {
+            if (isServer)
+            {
+                GameObject.Find("GO_NetworkManager").GetComponent<NetworkManager>().StopHost();
+            }
+        }
         Application.LoadLevel("menu");
     }
 
