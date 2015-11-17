@@ -32,8 +32,9 @@ public class LaserSaccadeScript : NetworkBehaviour
 	{
         Debug.Log("Shoot Solo");
 		Rigidbody rProjectile_ = Instantiate(m_rProjectile, transform.position, transform.rotation) as Rigidbody;
-		rProjectile_.velocity = transform.TransformDirection(Vector3.forward * m_fSpeed);
-		Destroy(rProjectile_.gameObject, m_fSecondsUntilDestroy);
+        GameObject goParent_ = GameObject.FindGameObjectWithTag("Player");
+        rProjectile_.velocity = transform.TransformDirection(Vector3.forward * m_fSpeed) + goParent_.GetComponent<Rigidbody>().velocity;
+        Destroy(rProjectile_.gameObject, m_fSecondsUntilDestroy);
 	}
 
 
@@ -48,7 +49,8 @@ public class LaserSaccadeScript : NetworkBehaviour
     {
         Debug.Log("Shoot Multi");
         Rigidbody rProjectile_ = Instantiate(m_rProjectile, transform.position, transform.rotation) as Rigidbody;
-        rProjectile_.velocity = transform.TransformDirection(Vector3.forward * m_fSpeed);
+        GameObject goParent_ = GameObject.FindGameObjectWithTag("Player");
+        rProjectile_.velocity = transform.TransformDirection(Vector3.forward * m_fSpeed) + goParent_.GetComponent<Rigidbody>().velocity;
         NetworkServer.Spawn(rProjectile_.gameObject);
         Destroy(rProjectile_.gameObject, m_fSecondsUntilDestroy);
     }

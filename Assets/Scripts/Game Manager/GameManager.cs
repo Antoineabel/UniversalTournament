@@ -11,9 +11,10 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject m_goPlayer;
 	public Text m_txtLifeText;
+    public Text m_txtBouclierText;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		m_iNumberOfEnnemies = GameObject.FindGameObjectsWithTag ("Ennemy").Length;
 		m_iNumberOfAllies = GameObject.FindGameObjectsWithTag ("Player").Length + GameObject.FindGameObjectsWithTag ("Ally").Length;
 
@@ -23,9 +24,12 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (m_goPlayer)
-			m_txtLifeText.text = "Life: "+Mathf.Round(m_goPlayer.GetComponent<LifeManager> ().m_fLife).ToString();
-	}
+        if (m_goPlayer)
+        {
+            m_txtLifeText.text = "Life: " + Mathf.Round(m_goPlayer.GetComponent<LifeManager>().m_fLife).ToString();
+            m_txtBouclierText.text = "Bouclier: " + Mathf.Round(m_goPlayer.GetComponent<LifeManager>().m_fBouclier).ToString();
+        }
+    }
 
 	public bool GetIfIsLost()
 	{
