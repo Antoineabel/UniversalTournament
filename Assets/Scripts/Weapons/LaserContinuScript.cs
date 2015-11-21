@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections;
 
-public class LaserContinuScript : NetworkBehaviour
+public class LaserContinuScript : MonoBehaviour
 {
     private LineRenderer m_lrLine;
     private Light m_lLight;
@@ -33,22 +32,8 @@ public class LaserContinuScript : NetworkBehaviour
             {
                 if (Input.GetButtonDown("Fire2"))
                 {
-                    Debug.Log("Laser continue");
-                    if (m_sSceneMode[1]=="Multi")
-                    {
-                        Debug.Log("Laser continue en multi");
-                        if(isLocalPlayer)
-                        {
-                            Debug.Log("Laser continue sur joueur local");
-                            StopCoroutine("FireLaser");
-                            StartCoroutine("FireLaser");
-                        }
-                    }
-                    else
-                    {
-                        StopCoroutine("FireLaser");
-                        StartCoroutine("FireLaser");
-                    }
+                    StopCoroutine("FireLaser");
+                    StartCoroutine("FireLaser");
                 }
             }
         }

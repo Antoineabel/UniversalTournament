@@ -19,7 +19,7 @@ public class NetworkSettingsManager : MonoBehaviour {
 
         if (Application.loadedLevelName == "NetSettings")
         {
-            Debug.Log("je suis une bite" + m_oMap);
+            Debug.Log("Map Actuelle" + m_oMap);
             GameObject.Find("GO_NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(m_oMap);
         }
 	}
