@@ -9,6 +9,7 @@ public class CollisionsScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         m_sSceneMode = Application.loadedLevelName.Split('_');
+        Debug.LogError("J'ai un collision script " + this.transform.gameObject.name);
     }
 	
 	// Update is called once per frame
@@ -24,14 +25,20 @@ public class CollisionsScript : MonoBehaviour {
         case "SimpleShoot":
                 if (this.gameObject.GetComponent<LifeManager>())
                 {
+                    Debug.LogError("J'ai été touché " + this.transform.gameObject.name);
                     if (m_sSceneMode[1] == "Solo")
                     {
                         LiveLost(_cCollider.gameObject.GetComponent<PuissanceProjectile>().m_fPuissance);
                     }
                     else
                     {
+                        Debug.LogError("J'ai été touché en multi");
                         LiveLost(_cCollider.gameObject.GetComponent<PuissanceProjectileMulti>().m_fPuissance);
                     }
+                }
+                else
+                {
+                    Debug.LogError("J'ai été touché par balles et j'ai pas de lifemanager");
                 }
             break;
 
@@ -48,6 +55,15 @@ public class CollisionsScript : MonoBehaviour {
         case "Ennemy":
             if (tag == "Player")
                 LiveLost(GetComponent<LifeManager>().m_fLife);
+            break;
+        case "Laser":
+            if (this.gameObject.GetComponent<LifeManager>())
+            {
+                if (m_sSceneMode[1] == "Multi")
+                {
+                    LiveLost(_cCollider.gameObject.GetComponent<PuissanceLaserMulti>().m_fPuissance);
+                }
+            }
             break;
 		}
 	}

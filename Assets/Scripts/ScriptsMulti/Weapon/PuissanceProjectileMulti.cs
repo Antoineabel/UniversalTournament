@@ -35,6 +35,17 @@ public class PuissanceProjectileMulti : NetworkBehaviour
 
     void OnCollisionEnter(Collision _cCollision)
     {
-        Destroy(this.gameObject);
+        Debug.Log(_cCollision.gameObject.tag);
+        if (_cCollision.gameObject.CompareTag("Player"))
+        {
+            LiveLost(_cCollision.gameObject);
+        }
+        Destroy(this.gameObject, 2.0f);
+    }
+
+    void LiveLost(GameObject _goDamaged)
+    {
+        Debug.Log(_goDamaged.name + " perd de la vie !");
+        _goDamaged.transform.GetChild(1).transform.GetChild(0).GetComponent<LifeManager>().MinusLife(m_fPuissance);
     }
    }

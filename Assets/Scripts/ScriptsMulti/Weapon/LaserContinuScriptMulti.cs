@@ -16,19 +16,13 @@ public class LaserContinuScriptMulti : NetworkBehaviour
     public GameObject m_goLaserCylindre;
 
     private Transform m_tOriginShoot;
-    private GameObject go; 
+    private GameObject go;
     // Use this for initialization
     void Start ()
     {
-        m_tOriginShoot = transform;
+        m_tOriginShoot = transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0);
         m_fCylindreScaleY = m_goLaserCylindre.transform.localScale.y;
-        m_lrLine = gameObject.GetComponent<LineRenderer>();
-        m_lLight = gameObject.GetComponent<Light>();
-
-        m_lrLine.enabled = false;
-        m_lLight.enabled = false;
         m_sSceneMode = Application.loadedLevelName.Split('_');
-        
 	}
 	
 	// Update is called once per frame
@@ -42,74 +36,64 @@ public class LaserContinuScriptMulti : NetworkBehaviour
                 {
                     if (Input.GetButton("Fire2") )
                     {
-                        //Debug.Log("Laser continue sur joueur local");
-                        //StopCoroutine("FireLaser");
-                        //StartCoroutine("FireLaser");
-                        Vector3 v3Pos = new Vector3(m_tOriginShoot.position.x, m_tOriginShoot.position.y, m_tOriginShoot.position.z - m_fCylindreScaleY );
-                        if (go == null)
-                        {
-                            go = Instantiate(m_goLaserCylindre) as GameObject;
-                        }
-                        go.transform.localScale = new Vector3(1, m_fCylindreScaleY, 1);
-                        
-                        go.transform.rotation = new Quaternion(transform.forward.x, transform.forward.y, transform.forward.z, transform.rotation.w);
-                        go.transform.position = v3Pos;
-
-                        if (m_fCylindreScaleY < 100)
-                        {
-                            m_fCylindreScaleY++;
-                        }
+                        TransmitLaser();
+                    }
+                    if (Input.GetButtonUp("Fire2"))
+                    {
+                        m_fCylindreScaleY = 0;
+                        TransmitDestroy();
                     }
                 }
             }
         }
 	}
-
-    IEnumerator FireLaser()
+    [Client]
+    void TransmitDestroy()
     {
-        m_lrLine.enabled = true;
-        m_lLight.enabled = true;
+        CmdDestroyLaserMulti();
+    }
 
-        while (Input.GetButton("Fire2") && !GameObject.Find("GameManager").GetComponent<PauseMenuScript>().GetIsPaused())
+    [Command]
+    public void CmdDestroyLaserMulti()
+    {
+        Destroy(go);
+        NetworkServer.UnSpawn(go);
+    }
+    [Client]
+    void TransmitLaser()
+    {
+        CmdLaserMulti();
+    }
+
+    [Command]
+    public void CmdLaserMulti()
+    {
+        Vector3 v3Pos = new Vector3(m_tOriginShoot.position.x, m_tOriginShoot.position.y, m_tOriginShoot.position.z);
+
+        if (go == null)
         {
-            m_lrLine.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0, Time.time);
-
-            Ray rRay = new Ray(transform.position, transform.forward);
-            RaycastHit rhHit;
-
-            m_lrLine.SetPosition(0, rRay.origin);
-            if (Physics.Raycast(rRay, out rhHit, 100))
-            {
-                m_lrLine.SetPosition(1, rhHit.point);
-                if (rhHit.rigidbody)
-                {
-                    if (rhHit.rigidbody.tag != "SimpleShoot")
-                    {
-                        if (rhHit.rigidbody.gameObject.GetComponent<LifeManager>())
-                        {
-                            rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(m_fPuissance);
-                            GameObject goParticule;
-                            goParticule = Instantiate(m_goParticuleEffect, rhHit.transform.position, rhHit.transform.rotation) as GameObject;
-                            Destroy(goParticule, 1.0f);
-                        }
-                        else
-                        {
-                            Debug.Log("No Life Manager");
-                        }
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                m_lrLine.SetPosition(1, rRay.GetPoint(100));
-            }
-            yield return null;
+            go = Instantiate(m_goLaserCylindre) as GameObject;
+            
         }
-        m_lrLine.enabled = false;
-        m_lLight.enabled = false;
+        go.transform.GetChild(0).transform.localScale = new Vector3(0.2f, m_fCylindreScaleY, 0.2f);
+        go.transform.rotation = transform.rotation;
+        go.transform.position = v3Pos;
+
+        if (go.transform.GetChild(0).GetComponent<PuissanceLaserMulti>().m_bHitSmth)
+        {
+            float fNewdist = Vector3.Distance(transform.position, go.transform.GetChild(0).GetComponent<PuissanceLaserMulti>().m_v3ColisionPoint) / 2;
+            float fOldSize = m_fCylindreScaleY;
+            m_fCylindreScaleY = fNewdist;
+
+            go.transform.GetChild(0).transform.localScale = new Vector3(0.2f, m_fCylindreScaleY, 0.2f);
+            go.transform.GetChild(0).Translate(0, -(fOldSize - fNewdist), 0);
+        }
+
+        if (m_fCylindreScaleY < 70 && !go.transform.GetChild(0).GetComponent<PuissanceLaserMulti>().m_bHitSmth)
+        {
+            m_fCylindreScaleY++;
+            go.transform.GetChild(0).Translate(0, 1, 0);
+        }
+        NetworkServer.Spawn(go);
     }
 }
