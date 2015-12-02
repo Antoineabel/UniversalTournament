@@ -2,32 +2,32 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
-
+public class GameManager : MonoBehaviour
+{
 	private int m_iNumberOfEnnemies;
 	private int m_iNumberOfAllies;
 	private bool m_bIsLost;
 	private bool m_bIsWin;
 
-	public GameObject m_goPlayer;
 	public Text m_txtLifeText;
     public Text m_txtBouclierText;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
 		m_iNumberOfEnnemies = GameObject.FindGameObjectsWithTag ("Ennemy").Length;
 		m_iNumberOfAllies = GameObject.FindGameObjectsWithTag ("Player").Length + GameObject.FindGameObjectsWithTag ("Ally").Length;
 
-		m_bIsLost = m_bIsWin = false;
-
+		m_bIsLost = m_bIsWin = false;   
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (m_goPlayer)
+	void Update ()
+    {
+        if (GameObject.FindGameObjectWithTag("Player"))
         {
-            m_txtLifeText.text = "Life: " + Mathf.Round(m_goPlayer.GetComponent<LifeManager>().m_fLife).ToString();
-            m_txtBouclierText.text = "Bouclier: " + Mathf.Round(m_goPlayer.GetComponent<LifeManager>().m_fBouclier).ToString();
+            m_txtLifeText.text = "Life: " + Mathf.Round(GameObject.FindGameObjectWithTag("Player").GetComponent<LifeManager>().m_fLife).ToString();
+            m_txtBouclierText.text = "Bouclier: " + Mathf.Round(GameObject.FindGameObjectWithTag("Player").GetComponent<LifeManager>().m_fBouclier).ToString();
         }
     }
 

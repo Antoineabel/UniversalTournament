@@ -1,11 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace SpaceShip{
 	[RequireComponent(typeof (SpaceShipController))]
-	public class SpaceShipUserControl4Axis : NetworkBehaviour {
+	public class SpaceShipUserControl4Axis : MonoBehaviour {
 
 		// these max angles are only used on mobile, due to the way pitch and roll input are handled
 		public float maxRollAngle = 80;
@@ -17,34 +16,22 @@ namespace SpaceShip{
 		private bool m_AirBrakes;
 		private float m_Yaw;
 
-        private Transform myTransform;
-        [SyncVar]
-        private Vector3 SyncPosition;
-
-        [SyncVar]
-        private Quaternion SyncRotation;
+        private string[] m_sSceneMode;
 		
 		private void Start()
         {
-            myTransform = transform;
-
 			// Set up the reference to the aeroplane controller.
 			m_Aeroplane = GetComponent<SpaceShipController>();
+
+            m_sSceneMode = Application.loadedLevelName.Split('_');
 		}
 		
 		
 		private void FixedUpdate()
 		{
-            if (Application.loadedLevelName != "MenuMulti" && Application.loadedLevelName != "MenuSolo")
+            if (m_sSceneMode[0] != "Menu")
             {
-                //if (!isLocalPlayer)
-                //{
-                //    myTransform.position = Vector3.Lerp(myTransform.position, SyncPosition, Time.deltaTime * 15);
-                //    myTransform.rotation = Quaternion.Slerp(myTransform.rotation, SyncRotation, Time.deltaTime * 15);
-                //}
-                //else
-                //{
-                    // Read input for the pitch, yaw, roll and throttle of the aeroplane.
+             	    // Read input for the pitch, yaw, roll and throttle of the aeroplane.
                     float roll = CrossPlatformInputManager.GetAxis("Horizontal");
                     float pitch = CrossPlatformInputManager.GetAxis("Mouse Y");
                     m_AirBrakes = (CrossPlatformInputManager.GetButton("Jump"));
@@ -53,10 +40,9 @@ namespace SpaceShip{
 #if MOBILE_INPUT
 			        AdjustInputForMobileControls(ref roll, ref pitch, ref m_Throttle);
 #endif
-                    // Pass the input to the aeroplane
-                    m_Aeroplane.Move(roll, pitch, m_Yaw, m_Throttle, m_AirBrakes);
-                //}
-            }
+               
+                	m_Aeroplane.Move(roll, pitch, m_Yaw, m_Throttle, m_AirBrakes);
+             }
 		}
 		
 		
@@ -75,6 +61,5 @@ namespace SpaceShip{
 			roll = Mathf.Clamp((intendedRollAngle - m_Aeroplane.RollAngle), -1, 1);
 			pitch = Mathf.Clamp((intendedPitchAngle - m_Aeroplane.PitchAngle), -1, 1);
 		}
-
 	}
 }

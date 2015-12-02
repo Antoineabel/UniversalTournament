@@ -66,7 +66,7 @@ public class LifeManager : MonoBehaviour
             {
                 if (gameObject.tag == "Player")
                 {
-                    Camera.main.GetComponent<SmoothFollow>().PlayShake();
+                   // Camera.main.GetComponent<CameraShake>().PlayShake();
                 }
                 m_fLife -= _fWeaponPower;
             }

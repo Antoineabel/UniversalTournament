@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PauseMenuScript : MonoBehaviour
 {
-    private  bool m_bIsPaused;
+    public bool m_bIsPaused;
     public Canvas m_cCanvas;
      
     // Use this for initialization
@@ -31,10 +31,5 @@ public class PauseMenuScript : MonoBehaviour
                 Time.timeScale = 0.0f;
             }
         }
-    }
-
-    public  bool GetIsPaused()
-    {
-        return m_bIsPaused;
     }
 }

@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CursorLock : MonoBehaviour {
+public class CursorLock : MonoBehaviour
+{
 	// Use this for initialization
 	void Start () {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (gameObject.GetComponent<PauseMenuScript> ().GetIsPaused ()) {
+	void Update ()
+    {
+		if (gameObject.GetComponent<PauseMenuScript>().m_bIsPaused)
+        {
 			UpdateCursorStatus (CursorLockMode.None, true);
-		} else {
+		}
+        else
+        {
 			UpdateCursorStatus(CursorLockMode.Locked, false);
 		}
 	}

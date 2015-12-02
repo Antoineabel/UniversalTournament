@@ -5,6 +5,7 @@ public class LaserContinuScript : MonoBehaviour
 {
     private LineRenderer m_lrLine;
     private Light m_lLight;
+    private string[] m_sSceneMode;
 
     public float m_fPuissance; // a passer en private une fois la valeur determinee
     public GameObject m_goParticuleEffect;
@@ -17,16 +18,16 @@ public class LaserContinuScript : MonoBehaviour
 
         m_lrLine.enabled = false;
         m_lLight.enabled = false;
-	}
+
+        m_sSceneMode = Application.loadedLevelName.Split('_');
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (Application.loadedLevelName != "MenuSolo"
-            && Application.loadedLevelName != "MenuMulti"
-            && GameObject.Find("GameManager"))
+        if (m_sSceneMode[0] != "Menu")
         {
-            if (!GameObject.Find("GameManager").GetComponent<PauseMenuScript>().GetIsPaused())
+            if (!GameObject.Find("GameManager").GetComponent<PauseMenuScript>().m_bIsPaused)
             {
                 if (Input.GetButtonDown("Fire2"))
                 {
@@ -42,7 +43,7 @@ public class LaserContinuScript : MonoBehaviour
         m_lrLine.enabled = true;
         m_lLight.enabled = true;
 
-        while (Input.GetButton("Fire2") && !GameObject.Find("GameManager").GetComponent<PauseMenuScript>().GetIsPaused())
+        while (Input.GetButton("Fire2") && !GameObject.Find("GameManager").GetComponent<PauseMenuScript>().m_bIsPaused)
         {
             m_lrLine.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0, Time.time);
 

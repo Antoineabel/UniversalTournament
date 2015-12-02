@@ -4,10 +4,10 @@ using System.Collections;
 public class CollisionsScript : MonoBehaviour {
 
 	private float m_fCollideForce = 500;
-
+    private string[] m_sSceneMode;
 	// Use this for initialization
 	void Start () {
-	
+        m_sSceneMode = Application.loadedLevelName.Split('_');
 	}
 	
 	// Update is called once per frame
@@ -21,7 +21,18 @@ public class CollisionsScript : MonoBehaviour {
 		switch(sTag)
 		{
 		case "SimpleShoot":
-			LiveLost(_cCollider.gameObject.GetComponent<PuissanceProjectile>().m_fPuissance);
+            if(this.gameObject.GetComponent<LifeManager>())
+                {
+                    if (m_sSceneMode[1] == "Solo")
+                    {
+                        LiveLost(_cCollider.gameObject.GetComponent<PuissanceProjectile>().m_fPuissance);
+                    }
+                    else
+                    {
+                        LiveLost(_cCollider.gameObject.GetComponent<PuissanceProjectileMulti>().m_fPuissance);
+
+                    }
+                }
 			break;
 			
 		case "Object":

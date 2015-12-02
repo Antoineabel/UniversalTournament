@@ -3,8 +3,6 @@ using System.Collections;
 
 public class eventButtons : MonoBehaviour
 {
-
-
     void Awake()
     {
         Time.timeScale = 1;
@@ -47,6 +45,11 @@ public class eventButtons : MonoBehaviour
         Application.LoadLevel("menu");
     }
 
+    public void Resume()
+    {
+        GameObject.Find("GameManager").GetComponent<PauseMenuScript>().m_bIsPaused = false;
+    }
+
     public void MenuPlay()
     {
         Camera.main.transform.Rotate(0, 90, 0);
@@ -59,13 +62,12 @@ public class eventButtons : MonoBehaviour
 
     public void MenuMulti()
     {
-        Application.LoadLevel("MenuMulti");
+        Application.LoadLevel("Menu_Multi");
     }
 
     public void MenuSolo()
     {
-        Application.LoadLevel("game");
+        Application.LoadLevel("Menu_Solo");
 
     }
-
 }

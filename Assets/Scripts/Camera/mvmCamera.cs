@@ -42,9 +42,9 @@ public class mvmCamera : MonoBehaviour {
 		}
 		else 
 		{
-			if (m_fDistOld < 20)
+			if (m_fDistOld < GetComponent<SmoothFollow>().GetDistance())
 				m_fDistOld+=Time.deltaTime*3;
-			if (m_fHeightOld < 3)
+			if (m_fHeightOld < GetComponent<SmoothFollow>().GetHeight())
 				m_fHeightOld+=Time.deltaTime;
 
 			if (m_fAlphaOld>=0)
