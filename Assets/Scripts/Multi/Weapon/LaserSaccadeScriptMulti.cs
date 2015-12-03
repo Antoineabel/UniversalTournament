@@ -22,7 +22,7 @@ public class LaserSaccadeScriptMulti : NetworkBehaviour
     {
         m_sSceneMode = Application.loadedLevelName.Split('_');
         m_fTime = 0;
-        m_tOriginShoot = transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0);
+        m_tOriginShoot = transform.GetChild(0);
     }
 	
 	// Update is called once per frame
@@ -54,6 +54,7 @@ public class LaserSaccadeScriptMulti : NetworkBehaviour
     {
         GameObject rProjectile_ = Instantiate(m_rProjectile, m_tOriginShoot.position, m_tOriginShoot.rotation) as GameObject;
         rProjectile_.GetComponent<PuissanceProjectileMulti>().SyncRotation = m_tOriginShoot.rotation;
+		rProjectile_.GetComponent<PuissanceProjectileMulti>().ApplySpeed(GetComponent<Rigidbody>().velocity);
         NetworkServer.Spawn(rProjectile_);
         Destroy(rProjectile_.gameObject, m_fSecondsUntilDestroy);
     }

@@ -12,15 +12,11 @@ public class PuissanceProjectileMulti : NetworkBehaviour
 
     private Transform myTransform;
 
-//    private string m_sSceneMode;
-
     // Use this for initialization
     void Start()
     {
-//        m_sSceneMode = Application.loadedLevelName.Split('_')[1];
         myTransform = GetComponent<Transform>();
         myTransform.rotation = SyncRotation;
-        GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * m_fSpeed);
         
     }
 
@@ -43,6 +39,12 @@ public class PuissanceProjectileMulti : NetworkBehaviour
     void LiveLost(GameObject _goDamaged)
     {
         Debug.Log(_goDamaged.name + " perd de la vie !");
-        _goDamaged.transform.GetChild(1).transform.GetChild(0).GetComponent<LifeManager>().MinusLife(m_fPuissance);
+        _goDamaged.GetComponent<LifeManager>().MinusLife(m_fPuissance);
     }
-   }
+
+	public void ApplySpeed(Vector3 _v3Force)
+	{
+        GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward * m_fSpeed) + _v3Force;
+	}
+
+}

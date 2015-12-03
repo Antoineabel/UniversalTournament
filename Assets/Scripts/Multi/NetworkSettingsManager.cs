@@ -4,18 +4,11 @@ using System.Collections;
 
 public class NetworkSettingsManager : MonoBehaviour {
 
-    private static GameObject m_goShipPrefab;
+//    private static GameObject m_goShipPrefab;
     private static string m_oMap;
-    private static int cpt;
 
 	// Use this for initialization
 	void Start () {
-        cpt = 0;
-        foreach (GameObject go in GameObject.FindObjectsOfType<GameObject>())
-        {
-            cpt++;
-        }
-        cpt = 0;
 
         if (Application.loadedLevelName == "NetSettings")
         {
@@ -29,15 +22,15 @@ public class NetworkSettingsManager : MonoBehaviour {
 	
 	}
 
-    public void SetShipPrefab(GameObject _goShipPrefab)
-    {
-        m_goShipPrefab = _goShipPrefab;
-    }
+//    public void SetShipPrefab(GameObject _goShipPrefab)
+//    {
+//        m_goShipPrefab = _goShipPrefab;
+//    }
 
-    public GameObject GetShipPrefab()
-    {
-        return m_goShipPrefab;
-    }
+//    public GameObject GetShipPrefab()
+//    {
+//        return m_goShipPrefab;
+//    }
 
     public void SetMap(string _oMap)
     {

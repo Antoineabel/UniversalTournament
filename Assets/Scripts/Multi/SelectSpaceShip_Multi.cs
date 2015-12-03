@@ -30,7 +30,7 @@ public class SelectSpaceShip_Multi : MonoBehaviour {
             }
         }
         m_goShip.transform.Rotate(0, Time.deltaTime * 100, 0);
-        SendShipToNetSettingsManager();
+//        SendShipToNetSettingsManager();
     }
 
     private void InstantateShip()
@@ -54,8 +54,8 @@ public class SelectSpaceShip_Multi : MonoBehaviour {
             m_iCompteur--;
     }
 
-    public void SendShipToNetSettingsManager()
-    {
-        GameObject.Find("NetworkSettings").GetComponent<NetworkSettingsManager>().SetShipPrefab(m_goTabShip[m_iCompteur]);
-    }
+//    public void SendShipToNetSettingsManager()
+//    {
+//        GameObject.Find("NetworkSettings").GetComponent<NetworkSettingsManager>().SetShipPrefab(m_goTabShip[m_iCompteur]);
+//    }
 }
