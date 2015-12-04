@@ -83,11 +83,12 @@ public class SmoothFollow : MonoBehaviour
 		transform.LookAt(target, target.up);
 	}
 
-	public void SetDistanceAndHeight(float _fDist, float _fHeight)
+	public void SetDistanceHeightDamping(float _fDist, float _fHeight, float _fDamping)
 	{
 		distance = _fDist;
 		height = _fHeight;
-	}
+        damping = _fDamping;
+    }
 
 	public float GetDistance()
 	{
@@ -97,9 +98,14 @@ public class SmoothFollow : MonoBehaviour
 	public float GetHeight()
 	{
 		return height;
-	}
+    }
 
-	/*IEnumerator Shake() {
+    public float GetDamping()
+    {
+        return damping;
+    }
+
+    /*IEnumerator Shake() {
 		
 		float elapsed = 0.0f;
 		
