@@ -72,7 +72,7 @@ public class LifeManager : MonoBehaviour
             {
                 if (gameObject.tag == "Player")
                 {
-                   // Camera.main.GetComponent<CameraShake>().PlayShake();
+                   Camera.main.GetComponent<CameraShake>().PlayShake();
                 }
                 m_fLife -= _fWeaponPower;
             }
