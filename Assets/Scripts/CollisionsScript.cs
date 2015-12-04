@@ -55,7 +55,11 @@ public class CollisionsScript : MonoBehaviour {
 
 	void LiveLost(float _fDamage)
 	{
-		Debug.Log(gameObject.name + " perd de la vie !");
-		GetComponent<LifeManager> ().MinusLife(_fDamage);
+		Debug.Log(gameObject.name + " perd de la vie !"+_fDamage+" Pour etre exacte");
+		if (m_sSceneMode [1] == "Solo") {
+			GetComponent<LifeManager> ().MinusLife (_fDamage);
+		} else {
+			GetComponent<LifeManagerMulti> ().MinusLife (_fDamage);
+		}
 	}
 }

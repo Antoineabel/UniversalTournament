@@ -17,7 +17,6 @@ public class PuissanceProjectileMulti : NetworkBehaviour
     {
         myTransform = GetComponent<Transform>();
         myTransform.rotation = SyncRotation;
-        
     }
 
     // Update is called once per frame
@@ -29,17 +28,28 @@ public class PuissanceProjectileMulti : NetworkBehaviour
     void OnCollisionEnter(Collision _cCollision)
     {
         //Debug.Log(_cCollision.gameObject.tag);
-        if (_cCollision.gameObject.CompareTag("Player"))
-        {
+		switch (_cCollision.gameObject.tag) {
+		case ("Player"):
+		case ("Ennemy"):
+		case("Object"):
             LiveLost(_cCollision.gameObject);
-        }
-        Destroy(this.gameObject);
+        	Destroy(this.transform.parent.gameObject);
+			break;
+		default:
+        	Destroy(this.transform.parent.gameObject);
+//            LiveLost(_cCollision.gameObject);
+			break;
+		}
+//        if (_cCollision.gameObject.CompareTag("Player"))
+//        {
+//            LiveLost(_cCollision.gameObject);
+//        }
     }
 
     void LiveLost(GameObject _goDamaged)
     {
         Debug.Log(_goDamaged.name + " perd de la vie !");
-        _goDamaged.GetComponent<LifeManager>().MinusLife(m_fPuissance);
+        _goDamaged.GetComponent<LifeManagerMulti>().MinusLife(m_fPuissance);
     }
 
 	public void ApplySpeed(Vector3 _v3Force)

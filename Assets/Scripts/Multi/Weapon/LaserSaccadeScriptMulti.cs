@@ -55,6 +55,7 @@ public class LaserSaccadeScriptMulti : NetworkBehaviour
         GameObject rProjectile_ = Instantiate(m_rProjectile, m_tOriginShoot.position, m_tOriginShoot.rotation) as GameObject;
         rProjectile_.GetComponent<PuissanceProjectileMulti>().SyncRotation = m_tOriginShoot.rotation;
 		rProjectile_.GetComponent<PuissanceProjectileMulti>().ApplySpeed(GetComponent<Rigidbody>().velocity);
+		rProjectile_.transform.GetChild(0).GetComponent<PuissanceProjectileMulti>().ApplySpeed(GetComponent<Rigidbody>().velocity);
         NetworkServer.Spawn(rProjectile_);
         Destroy(rProjectile_.gameObject, m_fSecondsUntilDestroy);
     }
