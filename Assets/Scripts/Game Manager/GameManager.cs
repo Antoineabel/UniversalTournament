@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
 	public Text m_txtLifeText;
     public Text m_txtBouclierText;
+    public Text m_txtScoreText;
 
     // Use this for initialization
     void Start ()
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
         {
             m_txtLifeText.text = "Life: " + Mathf.Round(GameObject.FindGameObjectWithTag("Player").GetComponent<LifeManager>().m_fLife).ToString();
             m_txtBouclierText.text = "Bouclier: " + Mathf.Round(GameObject.FindGameObjectWithTag("Player").GetComponent<LifeManager>().m_fBouclier).ToString();
+           // m_txtScoreText.text = "Score: " + Mathf.Round(GameObject.FindGameObjectWithTag("Player").GetComponent<ScoreManager>().m_fScore).ToString();
         }
     }
 
