@@ -8,8 +8,9 @@ public class LaserContinuScript : MonoBehaviour
     private string[] m_sSceneMode;
 
     public float m_fPuissance; // a passer en private une fois la valeur determinee
-    public GameObject m_goParticuleEffect;
-
+	public float m_fDamageCoefficient = 0.5f; // In case if you want to apply damage to the repair ship's laser that is reduced. To keep between 0 and 1
+	public GameObject m_goParticuleEffect;
+	public bool m_bRepairLaser; //True if laser can repair
     // Use this for initialization
     void Start ()
     {
@@ -61,8 +62,18 @@ public class LaserContinuScript : MonoBehaviour
                     {
                         if (rhHit.rigidbody.gameObject.GetComponent<LifeManager>())
                         {
-                            rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(m_fPuissance);
-                            GameObject goParticule;
+							if (rhHit.rigidbody.gameObject.tag == "Ennemy") //If your target is an enemy
+							{
+								if (!m_bRepairLaser)
+									rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(m_fPuissance);
+								else
+									rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(m_fPuissance*m_fDamageCoefficient);
+							}
+							if (rhHit.rigidbody.gameObject.tag == "Ally" && m_bRepairLaser) //If your target is an ally and the laser is a repair laser
+							{
+								rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(-m_fPuissance); //Apply negative power, as
+							}                            
+							GameObject goParticule;
                             goParticule = Instantiate(m_goParticuleEffect, rhHit.transform.position, rhHit.transform.rotation) as GameObject;
                             Destroy(goParticule, 1.0f);
                         }
