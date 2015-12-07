@@ -6,11 +6,19 @@ public class LaserContinuScript : MonoBehaviour
     private LineRenderer m_lrLine;
     private Light m_lLight;
     private string[] m_sSceneMode;
+<<<<<<< HEAD:Assets/Scripts/Solo/Weapons/LaserContinuScript.cs
     private AudioSource m_acFireSound;
 
     public float m_fPuissance; // a passer en private une fois la valeur determinee
     public GameObject m_goParticuleEffect;
 
+=======
+
+    public float m_fPuissance; // a passer en private une fois la valeur determinee
+	public float m_fDamageCoefficient = 0.5f; // In case if you want to apply damage to the repair ship's laser that is reduced. To keep between 0 and 1
+	public GameObject m_goParticuleEffect;
+	public bool m_bRepairLaser; //True if laser can repair
+>>>>>>> origin/master:Assets/Scripts/Weapons/LaserContinuScript.cs
     // Use this for initialization
     void Start ()
     {
@@ -20,8 +28,11 @@ public class LaserContinuScript : MonoBehaviour
         m_lrLine.enabled = false;
         m_lLight.enabled = false;
 
+<<<<<<< HEAD:Assets/Scripts/Solo/Weapons/LaserContinuScript.cs
         m_acFireSound = GetComponent<AudioSource>();
 
+=======
+>>>>>>> origin/master:Assets/Scripts/Weapons/LaserContinuScript.cs
         m_sSceneMode = Application.loadedLevelName.Split('_');
     }
 	
@@ -54,7 +65,10 @@ public class LaserContinuScript : MonoBehaviour
             RaycastHit rhHit;
 
             m_lrLine.SetPosition(0, rRay.origin);
+<<<<<<< HEAD:Assets/Scripts/Solo/Weapons/LaserContinuScript.cs
             m_acFireSound.Play();
+=======
+>>>>>>> origin/master:Assets/Scripts/Weapons/LaserContinuScript.cs
 
             if (Physics.Raycast(rRay, out rhHit, 100))
             {
@@ -65,8 +79,23 @@ public class LaserContinuScript : MonoBehaviour
                     {
                         if (rhHit.rigidbody.gameObject.GetComponent<LifeManager>())
                         {
+<<<<<<< HEAD:Assets/Scripts/Solo/Weapons/LaserContinuScript.cs
                             rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(m_fPuissance);
                             GameObject goParticule;
+=======
+							if (rhHit.rigidbody.gameObject.tag == "Ennemy") //If your target is an enemy
+							{
+								if (!m_bRepairLaser)
+									rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(m_fPuissance);
+								else
+									rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(m_fPuissance*m_fDamageCoefficient);
+							}
+							if (rhHit.rigidbody.gameObject.tag == "Ally" && m_bRepairLaser) //If your target is an ally and the laser is a repair laser
+							{
+								rhHit.rigidbody.gameObject.GetComponent<LifeManager>().MinusLife(-m_fPuissance); //Apply negative power, as
+							}                            
+							GameObject goParticule;
+>>>>>>> origin/master:Assets/Scripts/Weapons/LaserContinuScript.cs
                             goParticule = Instantiate(m_goParticuleEffect, rhHit.transform.position, rhHit.transform.rotation) as GameObject;
                             Destroy(goParticule, 1.0f);
                         }

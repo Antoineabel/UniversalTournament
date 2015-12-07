@@ -5,6 +5,7 @@ public class LifeManager : MonoBehaviour
 {
 
     public float m_fLife;
+	public float m_fMaxLife;
     public GameObject m_goParticuleEffectExplosion;
 
     public bool m_bBouclierIsActive;
@@ -17,10 +18,15 @@ public class LifeManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+<<<<<<< HEAD:Assets/Scripts/Solo/Weapons/LifeManager.cs
         m_fBouclier = m_fValeurMaxBouclier;
         m_tShield = transform.Find("shield");
 
         m_sSceneMode = Application.loadedLevelName.Split('_');
+=======
+		//m_fMaxLife = m_fMaxLife;
+        //m_fBouclier = m_fValeurMaxBouclier;
+>>>>>>> origin/master:Assets/Scripts/Weapons/LifeManager.cs
     }
 
     // Update is called once per frame
@@ -40,6 +46,10 @@ public class LifeManager : MonoBehaviour
     {
         if (m_bBouclierIsActive)
         {
+			if ((m_fBouclier - _fWeaponPower) >=m_fValeurMaxBouclier)
+			{
+				m_fBouclier = m_fValeurMaxBouclier;
+			}
             if ((m_fBouclier - _fWeaponPower) <= 0f)
             {
                 m_fBouclier = 0f;
@@ -52,6 +62,11 @@ public class LifeManager : MonoBehaviour
         }
         else
         {
+			if ((m_fLife - _fWeaponPower) >= m_fMaxLife)
+			{
+				m_fLife = m_fMaxLife;
+				ActiverBouclier();
+			}
             if ((m_fLife - _fWeaponPower) <= 0f)
             {
                 m_fLife = 0f;
@@ -115,6 +130,11 @@ public class LifeManager : MonoBehaviour
     public void ActiverBouclier()
     {
         m_bBouclierIsActive = true;
+<<<<<<< HEAD:Assets/Scripts/Solo/Weapons/LifeManager.cs
         m_tShield.gameObject.SetActive(true);
     }
+=======
+		m_fBouclier = 1;
+	}
+>>>>>>> origin/master:Assets/Scripts/Weapons/LifeManager.cs
 }
