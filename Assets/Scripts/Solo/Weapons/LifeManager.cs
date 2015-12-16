@@ -11,9 +11,12 @@ public class LifeManager : MonoBehaviour
     public bool m_bBouclierIsActive;
     public float m_fValeurMaxBouclier;
     public float m_fBouclier;
+    public GameObject m_goDebrit1;
+    public GameObject m_goDebrit2;
 
     private Transform m_tShield;
     private string[] m_sSceneMode;
+
 
     // Use this for initialization
     void Start()
@@ -62,10 +65,10 @@ public class LifeManager : MonoBehaviour
         }
         else
         {
-			if ((m_fLife - _fWeaponPower) >= m_fMaxLife)
+			if ((m_fLife - _fWeaponPower) >= m_fMaxLife)  
 			{
 				m_fLife = m_fMaxLife;
-				ActiverBouclier();
+				//ActiverBouclier();
 			}
             if ((m_fLife - _fWeaponPower) <= 0f)
             {
@@ -74,6 +77,10 @@ public class LifeManager : MonoBehaviour
 
                 GameObject goParticule;
                 goParticule = Instantiate(m_goParticuleEffectExplosion, this.transform.position, this.transform.rotation) as GameObject;
+                
+                //Instantiation des debrits :
+                GameObject goDebrit1 = Instantiate(m_goDebrit1, transform.position, transform.rotation) as GameObject;
+                GameObject goDebrit2 = Instantiate(m_goDebrit2, transform.position, transform.rotation) as GameObject;
 
                 if (gameObject.tag == "Ennemy")
                     GameObject.Find("GameManager").GetComponent<GameManager>().DecreaseNumberOfEnnemies();

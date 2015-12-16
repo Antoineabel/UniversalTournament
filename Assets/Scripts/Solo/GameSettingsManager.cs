@@ -6,6 +6,7 @@ public class GameSettingsManager : MonoBehaviour
 {
 
     private static GameObject m_goShipPrefab;
+    private static Texture m_tTexturePauseMenu;
 
     // Use this for initialization
     void Start()
@@ -27,5 +28,15 @@ public class GameSettingsManager : MonoBehaviour
     public GameObject GetShipPrefab()
     {
         return m_goShipPrefab;
+    }
+
+    public void SetTexturePauseMenu(Texture _tTexturePauseMenu)
+    {
+        m_tTexturePauseMenu = _tTexturePauseMenu;
+    }
+
+    public Texture GetTexturePauseMenu()
+    {
+        return m_tTexturePauseMenu;
     }
 }

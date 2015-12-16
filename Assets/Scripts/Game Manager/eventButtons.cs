@@ -70,4 +70,10 @@ public class eventButtons : MonoBehaviour
         Application.LoadLevel("Menu_Solo");
 
     }
+
+    public void LoadMapSelection()
+    {
+        Application.LoadLevel("map");
+
+    }
 }

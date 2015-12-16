@@ -7,9 +7,11 @@ public class SelectSpaceShip_Solo : MonoBehaviour
     private GameObject m_goShip;
 
     public GameObject [] m_goTabShip;
+    public Texture[] m_tTabTexturePauseMenu;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 	 
 	}
 	
@@ -30,6 +32,7 @@ public class SelectSpaceShip_Solo : MonoBehaviour
         }
         m_goShip.transform.Rotate(0, Time.deltaTime * 100, 0);
         SendShipToGameSettingsManager();
+        SendTexturePauseMenuToGameSettingsManager();
     }
 
     private void InstantateShip()
@@ -56,5 +59,10 @@ public class SelectSpaceShip_Solo : MonoBehaviour
     public void SendShipToGameSettingsManager()
     {
         GameObject.Find("GameSettings").GetComponent<GameSettingsManager>().SetShipPrefab(m_goTabShip[m_iCompteur]);
+    }
+
+    public void SendTexturePauseMenuToGameSettingsManager()
+    {
+        GameObject.Find("GameSettings").GetComponent<GameSettingsManager>().SetTexturePauseMenu(m_tTabTexturePauseMenu[m_iCompteur]);
     }
 }

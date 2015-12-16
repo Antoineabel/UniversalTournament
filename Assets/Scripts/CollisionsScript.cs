@@ -39,6 +39,7 @@ public class CollisionsScript : MonoBehaviour {
 			gameObject.GetComponent<Rigidbody> ().AddForce (_cCollider.contacts [0].normal * m_fCollideForce);
 //			LiveLost(_cCollider.relativeVelocity.magnitude);
 			LiveLost(m_fCollideForce/10);
+                Debug.Log("ObjetTouché");
 			break;
 			
 		case "Player":
@@ -48,7 +49,8 @@ public class CollisionsScript : MonoBehaviour {
 		case "Ennemy":
 			if (tag == "Player" )
 				LiveLost(GetComponent<LifeManager> ().m_fLife);
-			break;
+                Debug.Log("ObjetTouché");
+                break;
 		}
 	}
 
